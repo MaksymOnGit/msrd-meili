@@ -23,7 +23,7 @@ async def products_consumer():
 
             mongo_base: MongoBase = msg.value()
 
-            if mongo_base.operation_type == 'insert' or mongo_base.operation_type == 'updated':
+            if mongo_base.operation_type == 'insert' or mongo_base.operation_type == 'update':
                 try:
                     product = Product(**mongo_base.full_document)
                     result = await process_document(client, product)
