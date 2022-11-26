@@ -16,6 +16,10 @@ async def documents_consumer():
         des_cons: DeserializingConsumer = consumer
         des_cons.subscribe(["MsrdDocuments.documents"])
         client = meilisearch.Client(settings.meilisearch_url)
+        client.index('documents').update_settings({
+            'sortableAttributes': ['id', 'partnerName', 'price', 'validateStockAvailability', 'status'],
+            'filterableAttributes': ['owner']
+        })
         while True:
             msg = des_cons.poll(timeout=1)
             if msg is None:

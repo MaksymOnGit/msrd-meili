@@ -9,14 +9,11 @@ from typing_extensions import Annotated
 
 
 class DocumentItem(BaseModel):
-    product_id: str
+    productId: str
     quantity: float
     price: float
-    product_name: str
-    quantitative_unit: str
-
-    class Config:
-        alias_generator = to_lower_camel
+    productName: str
+    quantitativeUnit: str
 
 
 def extract_id(raw_id: str) -> str:
@@ -25,8 +22,8 @@ def extract_id(raw_id: str) -> str:
 
 class Document(BaseModel):
     id: Annotated[str, Field(alias='_id', )]
-    partner_name: str
-    validate_stock_availability: bool
+    partnerName: str
+    validateStockAvailability: bool
     direction: int
     price: float
     owner: str
@@ -41,6 +38,3 @@ class Document(BaseModel):
     _normalize_updated_at = validator(
         "date",
         allow_reuse=True)(isoformat)
-
-    class Config:
-        alias_generator = to_lower_camel
