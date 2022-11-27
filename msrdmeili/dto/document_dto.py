@@ -1,10 +1,10 @@
 import json
+from typing import Union
 
 from pydantic import BaseModel, Field, validator
 from datetime import datetime
 
 from pydantic.json import isoformat
-from pydantic.utils import to_lower_camel
 from typing_extensions import Annotated
 
 
@@ -13,7 +13,7 @@ class DocumentItem(BaseModel):
     quantity: float
     price: float
     productName: str
-    quantitativeUnit: str
+    quantitativeUnit: Union[str, None]
 
 
 def extract_id(raw_id: str) -> str:
