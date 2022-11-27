@@ -27,7 +27,9 @@ async def documents_consumer():
 
             mongo_base: MongoBase = msg.value()
 
-            if mongo_base.operation_type == 'insert' or mongo_base.operation_type == 'update':
+            if mongo_base.operation_type == 'insert' or \
+                    mongo_base.operation_type == 'update' or \
+                    mongo_base.operation_type == 'replace':
                 try:
                     doc = Document(**mongo_base.full_document)
                     result = await process_document(client, doc)
