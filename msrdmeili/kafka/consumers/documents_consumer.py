@@ -17,7 +17,7 @@ async def documents_consumer():
         des_cons.subscribe(["MsrdDocuments.documents"])
         client = meilisearch.Client(settings.meilisearch_url)
         client.index('documents').update_settings({
-            'sortableAttributes': ['id', 'partnerName', 'price', 'validateStockAvailability', 'status'],
+            'sortableAttributes': ['id', 'partnerName', 'price', 'validateStockAvailability', 'status', 'date'],
             'filterableAttributes': ['owner']
         })
         while True:
