@@ -43,9 +43,19 @@ async def documents_consumer():
 
 async def process_document(client: Client, doc: Document) -> bool:
     task = client.index('documents').add_documents(doc.dict())
+    retry_count = 0
+    while task.task_uid is None and retry_count < 5:
+        task = client.index('documents').add_documents(doc.dict())
+        retry_count = retry_count + 1
+
+    if task.task_uid is None:
+        return False
+
+    task_uid = task.task_uid
+
     while True:
         await asyncio.sleep(0.1)
-        task = task.parse_obj(client.get_task(task.task_uid))
+        task = task.parse_obj(client.get_task(task_uid))
         if task.status == "succeeded":
             logger.info("Successfully added/updated meilisearch document with: {}", doc)
             return True
