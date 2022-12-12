@@ -22,6 +22,7 @@ class Product(BaseModel):
     price: Union[float, None]
     quantity: Union[float, None]
     quantitative_unit: Union[str, None]
+    deleted: Union[bool, None]
 
     # custom input conversion for that field
     _normalize_id = validator(
